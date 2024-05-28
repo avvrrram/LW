@@ -1,0 +1,14 @@
+
+sentence = str(input("Введіть речення: "))
+
+words = sentence.split()
+
+
+if len(words) > 1:
+   
+    words[0], words[-1] = words[-1], words[0]
+
+
+new_sentence = ' '.join(words)
+
+print("Речення після зміни першого та останнього слова місцями: ", new_sentence)
