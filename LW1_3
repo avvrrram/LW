@@ -1,0 +1,12 @@
+n = int(input("Введіть число N (1 < N < 9): "))
+
+
+if 1 < n < 9:
+   
+    for i in range(n, 0, -1):
+      
+        for j in range(i, n + 1):
+            print(j, end = " ")
+        print()
+else:
+    print("Введіть число в діапазоні від 2 до 8.")
