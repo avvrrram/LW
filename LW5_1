@@ -1,0 +1,19 @@
+n = int(input("Введіть кількість елементів у масиві Фібоначчі (n): "))
+
+
+if n <= 0:
+    print("Кількість елементів має бути додатньою")
+else:
+
+    fibonacci_sequence = []
+
+    for i in range(n):
+        if i == 0:
+            fibonacci_sequence.append(0)
+        elif i == 1:
+            fibonacci_sequence.append(1)
+        else:
+            fibonacci_sequence.append(fibonacci_sequence[i - 1] + fibonacci_sequence[i - 2])
+
+
+    print("Масив з елементів послідовності Фібоначчі: ", fibonacci_sequence)
