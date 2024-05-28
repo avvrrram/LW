@@ -1,0 +1,15 @@
+
+array = [[0 for j in range(7)] for i in range(7)]
+
+
+num = 1
+for i in range(7):
+    for j in range(i, 7):
+        array[i][j] = num
+        num += 1
+
+
+for row in array:
+    for elem in row:
+        print(f"{elem:2d}", end=" ")
+    print()
