@@ -1,0 +1,35 @@
+
+def insert_after():
+    try:
+        A = list(map(int, input('Введіть список:').split()))
+        print("Введений список:", A)
+
+
+
+        element = int(input('Введіть елемент, після якого потрібно вставити новий елемент: '))
+
+
+
+        new_element = int(input('Введіть новий елемент, який потрібно вставити: '))
+
+
+
+        if element in A:
+index = A.index(element) + 1
+        else:
+            print("Елемент в списку відсутній.")
+            return A
+
+
+
+        A.insert(index, new_element)
+
+
+
+        print("Змінений список:", A)
+        return A
+    except ValueError:
+        print("Введіть ціле число.")
+        return []
+
+insert_after()
