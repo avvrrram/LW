@@ -1,0 +1,21 @@
+def quicksort(arr):
+    if len(arr) <= 1:
+        return arr
+    else:
+        pivot = arr[len(arr) // 2]
+        left = [x for x in arr if x < pivot]
+        middle = [x for x in arr if x == pivot]
+        right = [x for x in arr if x > pivot]
+        return quicksort(left) + middle + quicksort(right)
+
+def sort_list():
+    A = list(map(int, input('Введіть список: ').split()))
+    print("Введений список:", A)
+
+    sorted_list = quicksort(A)
+
+ 
+    print("Відсортований список:", sorted_list)
+    return sorted_list
+
+sort_list()
