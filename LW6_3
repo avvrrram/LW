@@ -1,0 +1,33 @@
+def is_fibonacci(n):
+    
+    if n == 0 or n == 1:
+        return True
+    a, b = 0, 1
+    while b < n:
+        a, b = b, a + b
+    return b == n
+
+def fibonacci_numbers_in_set(s):
+
+    fibonacci_set = { 0, 1}
+a, b = 0, 1
+    while b <= 50:
+        a, b = b, a + b
+        fibonacci_set.add(b)
+    
+    
+    intersection = s & fibonacci_set
+
+ 
+    print("Початкова множина:", s)
+    print("Числа Фібоначчі в множині:", intersection)
+    print("Кількість чисел Фібоначчі в множині:", len(intersection))
+
+
+    return intersection
+
+
+s = set(range(1, 51))
+
+
+fibonacci_numbers_in_set(s)
