@@ -1,0 +1,34 @@
+# Ініціалізація даних команд та їх очок
+teams_points = {
+    "Team_A": 40,
+    "Team_B": 38,
+    "Team_C": 36,
+    "Team_D": 34,
+    "Team_E": 32,
+    "Team_F": 30,
+    "Team_G": 28,
+    "Team_H": 26,
+    "Team_I": 24
+}
+
+# Очки нової команди
+new_team_name = "Team_J"
+new_team_points = 29
+
+# Додаємо нову команду до словника
+teams_points[new_team_name] = new_team_points
+
+# Сортуємо словник за значеннями очок у зменшувальному порядку
+sorted_teams = sorted(teams_points.items(), key=lambda item: item[1], reverse=True)
+
+# Визначаємо місце нової команди
+new_team_rank = next(index for index, item in enumerate(sorted_teams, start=1) if item[0] == new_team_name)
+
+# Виводимо місце нової команди
+print(f"{new_team_name} займає {new_team_rank}-е місце.")
+
+# Виводимо назви команд, які набрали менше очок, ніж нова команда
+teams_with_less_points = [team for team, points in sorted_teams if points < new_team_points]
+print("Команди, які набрали менше очок, ніж нова команда:")
+for team in teams_with_less_points:
+    print(team)
