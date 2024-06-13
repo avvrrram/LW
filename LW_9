@@ -1,0 +1,24 @@
+import re
+
+
+with open("TF1_1.txt", "w", encoding="utf-8") as file1:
+    file1.write("This is the first line, which contains words and punctuation marks.\n")
+    file1.write("The second line is a bit shorter.\n")
+    file1.write("The third line might be the shortest!\n")
+
+# Step 2: Read TF1_1 file and create TF1_2 file with each word in a new line
+with open("TF1_1.txt", "r", encoding="utf-8") as file1:
+    content = file1.read()
+
+# Remove punctuation and split words
+words = re.findall(r'\b\w+\b', content)
+
+with open("TF1_2.txt", "w", encoding="utf-8") as file2:
+    for word in words:
+        file2.write(word + "\n")
+
+# Step 3: Read and print the contents of TF1_2 file line by line
+with open("TF1_2.txt", "r", encoding="utf-8") as file2:
+    lines = file2.readlines()
+    for line in lines:
+        print(line.strip())
