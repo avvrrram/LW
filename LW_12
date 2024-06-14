@@ -1,0 +1,130 @@
+import json
+
+def read_data(filename):
+  
+    with open(filename, "r") as file:
+        data = json.load(file)
+    return data
+
+def write_data(filename, data):
+    
+    with open(filename, "w") as file:
+        json.dump(data, file, indent=4)
+
+def display_content(filename):
+   
+    data = read_data(filename)
+    print(json.dumps(data, indent=4))
+
+def add_record(filename):
+   
+    data = read_data(filename)
+    new_record = {}
+    new_record['name'] = input("Введіть назву команди: ")
+    new_record['points'] = int(input("Введіть кількість очок команди: "))
+    data.append(new_record)
+    data = sorted(data, key=lambda x: x['points'], reverse=True)  # сортуємо за очками
+    write_data(filename, data)
+    print("Запис додано успішно.")
+
+def delete_record(filename, field, value):
+   
+    data = read_data(filename)
+    filtered_data = [record for record in data if record.get(field) != value]
+    write_data(filename, filtered_data)
+    print("Записи видалено успішно.")
+
+def search_records(filename, field, value):
+ 
+    data = read_data(filename)
+    found_records = [record for record in data if record.get(field) == value]
+    if found_records:
+        print("Знайдені записи:")
+        print(json.dumps(found_records, indent=4))
+    else:
+        print("Записи за заданим критерієм не знайдено.")
+
+def solve_task(filename, task_filename):
+
+    data = read_data(filename)
+    
+    # Опрацьовуємо завдання
+    team_name = input("Введіть назву нової команди: ")
+    team_points = int(input("Введіть кількість очок нової команди: "))
+    
+    # Додаємо нову команду до списку
+    new_team = {"name": team_name, "points": team_points}
+    data.append(new_team)
+    
+    # Сортуємо команди за кількістю очок у порядку спадання
+    data = sorted(data, key=lambda x: x['points'], reverse=True)
+    
+    # Визначаємо місце нової команди
+    position = next((i + 1 for i, team in enumerate(data) if team['name'] == team_name), None)
+    
+    # Знаходимо команди, які набрали менше очок, ніж нова команда
+    teams_with_less_points = [team['name'] for team in data if team['points'] < team_points]
+    
+    # Виводимо результати
+    if position is not None:
+        print(f"Команда {team_name} зайняла {position}-е місце.")
+        print(f"Команди, які набрали менше очок, ніж команда {team_name}:")
+        for team in teams_with_less_points:
+            print(team)
+    else:
+        print("Команда з таким ім'ям та кількістю очок не знайдена.")
+    
+    # Записуємо результат в інший файл
+    result = {
+        "team": team_name,
+        "position": position,
+        "teams_with_less_points": teams_with_less_points
+    }
+    write_data(task_filename, result)
+    print(f"Результат записано у файл {task_filename}.")
+
+# Основна функція для виклику опцій
+def main():
+    filename = "teams.json"
+    task_filename = "task_result.json"
+
+    while True:
+        print("\nОберіть опцію:")
+        print("  1 - Виведення вмісту JSON файлу")
+        print("  2 - Додавання нового запису у JSON файл")
+        print("  3 - Видалення запису з JSON файлу")
+        print("  4 - Пошук даних у JSON файлі за одним із полів на вибір")
+        print("  5 - Визначення місця нової команди та команд, які набрали менше очок, і запис результату в інший JSON файл")
+        print("  6 - Вихід")
+
+        choice = input("Виберіть опцію: ")
+
+        if choice == '1':
+            display_content(filename)
+        
+        elif choice == '2':
+            add_record(filename)
+        
+        elif choice == '3':
+            field = input("Введіть поле для видалення запису (наприклад, 'name'): ")
+            value = input("Введіть значення поля: ")
+            delete_record(filename, field, value)
+        
+        elif choice == '4':
+            field = input("Введіть поле для пошуку записів (наприклад, 'name'): ")
+            value = input("Введіть значення поля: ")
+            search_records(filename, field, value)
+        
+        elif choice == '5':
+            solve_task(filename, task_filename)
+        
+        elif choice == '6':
+            print("До побачення!")
+            break
+        
+        else:
+            print("Невірний вибір. Будь ласка, виберіть одну з опцій (1-6).")
+
+# Виклик основної функції
+if __name__ == "__main__":
+    main()
