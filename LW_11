@@ -1,0 +1,49 @@
+
+
+import csv
+
+
+file_path = 'GDP_per_capita_2019.csv' 
+
+
+data = []
+with open(file_path, newline='', encoding='utf-8') as csvfile:
+    csvreader = csv.reader(csvfile)
+    headers = next(csvreader)  
+    for row in csvreader:
+        data.append(row)
+
+
+print("File content:")
+for row in data[:5]:
+    print(row)
+
+
+def search_gdp_per_capita(countries, data, headers):
+   
+    country_index = headers.index('Country Name')
+   
+    search_results = [headers]
+    for row in data:
+        if row[country_index] in countries:
+            search_results.append(row)
+    return search_results
+
+
+input_countries = input("Enter country names separated by commas: ").split(',')
+input_countries = [country.strip() for country in input_countries]
+
+
+results = search_gdp_per_capita(input_countries, data, headers)
+
+
+print("\nSearch results:")
+for row in results:
+    print(row)
+
+
+with open('search_results.csv', mode='w', newline='', encoding='utf-8') as csvfile:
+    csvwriter = csv.writer(csvfile)
+    csvwriter.writerows(results)
+
+print("\nSearch results saved to 'search_results.csv'")
